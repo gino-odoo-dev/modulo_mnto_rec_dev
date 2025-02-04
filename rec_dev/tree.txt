@@ -1,0 +1,15 @@
+rec_dev/
+├── __init__.py
+├── __manifest__.py
+├── tree.txt
+├── readme.md
+
+└── models/
+    └── __init__.py
+    └── rec_model.py
+
+└── views/
+    └── rec_model_views.xml
+
+└── security/
+    └── ir.model.access.csv
