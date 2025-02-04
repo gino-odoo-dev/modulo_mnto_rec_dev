@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_rec_model_user,access_rec_model_user,model_rec_model,base.group_user,1,1,1,1
 access_rec_model_manager,access_rec_model_manager,model_rec_model,base.group_system,1,1,1,1
-access_articulo_model_user,access_articulo_model_user,model_articulo_model,base.group_user,1,1,1,1
-access_articulo_model_manager,access_articulo_model_manager,model_articulo_model,base.group_system,1,1,1,1
+
