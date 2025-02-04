@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_rec_model_form" model="ir.ui.view">
+        <field name="name">rec.model.form</field>
+        <field name="model">rec.model</field>
+        <field name="arch" type="xml">
+            <form string="Mnto Ficha Tecnica">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="product_id"/>
+                        <field name="temporada_id"/>
+                        <field name="articulo_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rec_model" model="ir.actions.act_window">
+        <field name="name">Mnto Ficha Tecnica</field>
+        <field name="res_model">rec.model</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="menu_rec_model" name="Rec Models" sequence="10"/>
+    <menuitem id="submenu_rec_model" name="Rec Models" parent="menu_rec_model" action="action_rec_model"/>
+</odoo>
