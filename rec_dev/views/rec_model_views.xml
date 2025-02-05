@@ -4,22 +4,41 @@
         <field name="model">rec.model</field>
         <field name="arch" type="xml">
             <form string="Mnto Ficha Tecnica">
+                <header>
+                    <button name="next_button" string="Siguiente" type="button" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name" style="width: 50%;"/>
                         <field name="description" style="width: 50%;"/>
                         <field name="product_id" style="width: 50%;"/>
                         <field name="temporada_id" style="width: 25%;"/>
+                        <field name="articulo" style="width: 25%;"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <record id="view_rec_model_tree" model="ir.ui.view">
+        <field name="name">rec.model.tree</field>
+        <field name="model">rec.model</field>
+        <field name="arch" type="xml">
+            <tree string="Mnto Ficha Tecnica">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="product_id"/>
+                <field name="temporada_id"/>
+                <field name="articulo"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="action_rec_model" model="ir.actions.act_window">
         <field name="name">Mnto Ficha Tecnica</field>
         <field name="res_model">rec.model</field>
-        <field name="view_mode">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_rec_model_form"/> 
     </record>
 
     <menuitem id="menu_rec_model" name="Mnto Ficha Tecnica" sequence="10"/>

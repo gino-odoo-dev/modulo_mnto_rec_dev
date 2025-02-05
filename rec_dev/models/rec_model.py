@@ -8,3 +8,5 @@ class RecModel(models.Model):
     description = fields.Text(string='Description')
     product_id = fields.Many2one('product.template', string='Product')
     temporada_id = fields.Many2one('cl.product.temporada', string='Temporada')
+    articulo = fields.Char(string='Articulo', store=False)
+
