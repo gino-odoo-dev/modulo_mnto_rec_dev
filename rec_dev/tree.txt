@@ -13,3 +13,79 @@ rec_dev/
 
 └── security/
     └── ir.model.access.csv
+
+
+tengo el siguiente modelo 
+
+
+from odoo import models, fields, api
+
+class RecModel(models.Model):
+    _name = 'rec.model'
+    _description = 'Ficha Tecnica'
+
+    name = fields.Char(string='Name', required=True)
+    description = fields.Text(string='Description')
+    product_id = fields.Many2one('product.template', string='Product')
+    temporada_id = fields.Many2one('cl.product.temporada', string='Temporada')
+    articulo = fields.Char(string='Articulo', store=False)
+
+la siguiente vista 
+
+<odoo>
+    <record id="view_rec_model_form" model="ir.ui.view">
+        <field name="name">rec.model.form</field>
+        <field name="model">rec.model</field>
+        <field name="arch" type="xml">
+            <form string="Mnto Ficha Tecnica">
+                <sheet>
+                    <header>
+                        <button name="next_button" string="Siguiente" type="button" class="oe_highlight" style="padding-bottom: 5px;"/>
+                    </header>
+                    <group>
+                        <field name="name" style="width: 50%;"/>
+                        <field name="description" style="width: 50%;"/>
+                        <field name="product_id" style="width: 50%;"/>
+                        <field name="temporada_id" style="width: 25%;"/>
+                        <field name="articulo" style="width: 25%;"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_rec_model_tree" model="ir.ui.view">
+        <field name="name">rec.model.tree</field>
+        <field name="model">rec.model</field>
+        <field name="arch" type="xml">
+            <tree string="Mnto Ficha Tecnica">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="product_id"/>
+                <field name="temporada_id"/>
+                <field name="articulo"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_rec_model" model="ir.actions.act_window">
+        <field name="name">Mnto Ficha Tecnica</field>
+        <field name="res_model">rec.model</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_rec_model_form"/> 
+    </record>
+
+    <menuitem id="menu_rec_model" name="Mnto Ficha Tecnica" sequence="10"/>
+    <menuitem id="submenu_rec_model" name="opciones" parent="menu_rec_model" action="action_rec_model"/>
+</odoo>
+
+
+el siguiente security
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rec_model_user,access_rec_model_user,model_rec_model_user,base.group_user,1,1,1,1
+access_rec_model_manager,access_rec_model_manager,model_rec_model_manager,base.group_system,1,1,1,1
+access_rec_model_user,rec.model.user,model_rec_model_user,base.group_user,1,0,0,0
+access_rec_model_manager,rec.model.manager,model_rec_model_manager,base.group_user,1,1,1,1
+
+button debe tener funcion, al ser apretado debe dirigir a una sheet nueva sin ningun campo por el momento

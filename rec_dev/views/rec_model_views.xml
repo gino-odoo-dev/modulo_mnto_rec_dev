@@ -4,10 +4,10 @@
         <field name="model">rec.model</field>
         <field name="arch" type="xml">
             <form string="Mnto Ficha Tecnica">
-                <header>
-                    <button name="next_button" string="Siguiente" type="button" class="oe_highlight"/>
-                </header>
                 <sheet>
+                    <header>
+                        <button name="next_button" string="Siguiente" type="object" class="oe_highlight"/>
+                    </header>
                     <group>
                         <field name="name" style="width: 50%;"/>
                         <field name="description" style="width: 50%;"/>
@@ -37,7 +37,7 @@
     <record id="action_rec_model" model="ir.actions.act_window">
         <field name="name">Mnto Ficha Tecnica</field>
         <field name="res_model">rec.model</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">form,tree</field>
         <field name="view_id" ref="view_rec_model_form"/> 
     </record>
 
