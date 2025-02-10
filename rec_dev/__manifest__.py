@@ -6,8 +6,8 @@
     'author': 'MarcoAG',
     'depends': ['base'],
     'data': [
-        'security/ir.model.access.csv',
         'views/rec_model_views.xml',
+        'security/ir.model.access.csv',
     ],
     'images': ['static/description/icon.png'],  
     'installable': True,

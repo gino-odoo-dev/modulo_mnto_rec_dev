@@ -1,1 +1,1 @@
-from . import rec_model
+from . import receta

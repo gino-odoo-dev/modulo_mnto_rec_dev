@@ -15,77 +15,176 @@ rec_dev/
     └── ir.model.access.csv
 
 
-tengo el siguiente modelo 
-
+modelo 
 
 from odoo import models, fields, api
 
-class RecModel(models.Model):
-    _name = 'rec.model'
-    _description = 'Ficha Tecnica'
+class Temporada(models.Model):
+    _name = 'temporada.model'
+    _description = 'Temporada' 
 
-    name = fields.Char(string='Name', required=True)
-    description = fields.Text(string='Description')
-    product_id = fields.Many2one('product.template', string='Product')
-    temporada_id = fields.Many2one('cl.product.temporada', string='Temporada')
-    articulo = fields.Char(string='Articulo', store=False)
+class Componente(models.Model):
+    _name = 'componente.model'
+    _description = 'Componente' 
 
-la siguiente vista 
+class Descripcion(models.Model):
+    _name = 'descripcion.model'
+    _description = 'Descripcion' 
+
+class Secuencia(models.Model):
+    _name = 'secuencia.model'
+    _description = 'Secuencia'
+
+class Unimedida(models.Model):
+    _name = 'unimedida.model'
+    _description = 'Unidad de Medida'    
+
+class Depto(models.Model):
+    _name = 'depto.model'
+    _description = 'Departamento'
+
+class Articulo(models.Model):
+    _name = 'articulo.model'
+    _description = 'Articulo'
+    
+    nombre = fields.Char(string="Nombre", required=True)
+
+class Compmanu(models.Model):
+    _name = 'compmanu.model'
+    _description = 'Compra o Manufacturado'
+
+class Factperdida(models.Model):
+    _name = 'factperdida.model'
+    _description = 'Factor de Perdida'
+
+class Cantidad(models.Model):
+    _name = 'cantidad.model'
+    _description = 'Cantidad'
+
+class Cunitario(models.Model):
+    _name = 'cunitario.model'
+    _description = 'Costo Unitario'
+
+class Campliado(models.Model):
+    _name = 'campliado.model'
+    _description = 'Costo Ampliado'
+
+class Temporadas(models.Model):
+    _name = 'cl.product.temporada'
+    _description = 'Temporadas'   
+
+class Receta(models.Model):
+    _name = 'receta'
+    _description = 'Receta'
+
+    temporadas_id = fields.Many2one('cl.product.temporada', string='Temporadas', readonly=False)
+    temporada_id = fields.Many2one('temporada.model', string='Temporada', readonly=False, ondelete='set null')
+    componente_id = fields.Many2one('componente.model', string='Componente', readonly=True)
+    descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)
+    secuencia_id = fields.Many2one('secuencia.model', string='Secuencia', readonly=True)
+    uni_medida_id = fields.Many2one('unimedida.model', string='Unidad de Medida', readonly=True)
+    depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
+    articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
+    comp_manu_id = fields.Many2one('compmanu.model', string='Compra o Manufacturado', readonly=True)
+
+    fact_perdida_id = fields.Float(string='Factor de Perdida', readonly=False)
+    cantidad_id = fields.Float(string='Cantidad', readonly=False)
+    c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)
+    c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True)
+
+    state = fields.Selection([
+        ('draft', 'Borrador'),
+        ('next', 'Siguiente')
+    ], default='draft', string="Estado")
+
+    def next_button(self):
+        self.ensure_one()
+        self.state = 'next'
+        self._cr.commit()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'receta',
+            'view_mode': 'tree,form',  
+            'target': 'current',
+            'context': {
+                'default_articulo_id': self.articulo_id.id, 
+                'search_default_articulo_id': self.articulo_id.id, 
+            },
+            'domain': [('articulo_id', '=', self.articulo_id.id)], 
+        }
+
+
+    @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id')
+    def calcular_costo_ampliado(self):
+        for record in self:
+            record.c_ampliado_id = record.cantidad_id + (record.cantidad_id * (record.fact_perdida_id / 100))
+            record.c_ampliado_id *= record.c_unitario_id
+
+
+vista 
 
 <odoo>
-    <record id="view_rec_model_form" model="ir.ui.view">
-        <field name="name">rec.model.form</field>
-        <field name="model">rec.model</field>
+    <record id="view_receta_form" model="ir.ui.view">
+        <field name="name">receta.form</field>
+        <field name="model">receta</field>
         <field name="arch" type="xml">
             <form string="Mnto Ficha Tecnica">
                 <sheet>
                     <header>
-                        <button name="next_button" string="Siguiente" type="button" class="oe_highlight" style="padding-bottom: 5px;"/>
+                        <button name="next_button" string="Siguiente" type="object" class="oe_highlight" context="{'create': False}"/>
                     </header>
                     <group>
-                        <field name="name" style="width: 50%;"/>
-                        <field name="description" style="width: 50%;"/>
-                        <field name="product_id" style="width: 50%;"/>
-                        <field name="temporada_id" style="width: 25%;"/>
-                        <field name="articulo" style="width: 25%;"/>
+                        <field name="temporadas_id" style="width: 30%;"/>
+                        <field name="articulo_id" style="width: 30%;"/>
+                    </group>
+                    <group>
+                        <field name="componente_id"/>
+                        <field name="descripcion_id"/>
+                        <field name="comp_manu_id"/>
+                        <field name="uni_medida_id"/>
+                        <field name="fact_perdida_id"/>
+                        <field name="cantidad_id"/>
+                        <field name="c_unitario_id"/>
+                        <field name="c_ampliado_id"/>
+                        <field name="depto_id"/>
+                        <field name="secuencia_id"/>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_rec_model_tree" model="ir.ui.view">
-        <field name="name">rec.model.tree</field>
-        <field name="model">rec.model</field>
+    <record id="view_receta_tree" model="ir.ui.view">
+        <field name="name">receta.tree</field>
+        <field name="model">receta</field>
         <field name="arch" type="xml">
-            <tree string="Mnto Ficha Tecnica">
-                <field name="name"/>
-                <field name="description"/>
-                <field name="product_id"/>
+            <tree string="Mnto Ficha Tecnica" editable="bottom">
+                <field name="articulo_id"/> 
                 <field name="temporada_id"/>
-                <field name="articulo"/>
+                <field name="secuencia_id"/>
+                <field name="componente_id"/>
+                <field name="descripcion_id"/>
+                <field name="comp_manu_id"/>
+                <field name="uni_medida_id"/>
+                <field name="fact_perdida_id"/>
+                <field name="cantidad_id"/>
+                <field name="c_unitario_id"/>
+                <field name="c_ampliado_id" widget="monetary"/>
+                <field name="depto_id"/>
+                <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estás seguro de eliminar el registro de la ficha técnica?"/>
             </tree>
         </field>
     </record>
 
-    <record id="action_rec_model" model="ir.actions.act_window">
+    <record id="action_receta" model="ir.actions.act_window">
         <field name="name">Mnto Ficha Tecnica</field>
-        <field name="res_model">rec.model</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_rec_model_form"/> 
+        <field name="res_model">receta</field>
+        <field name="view_mode">form,tree</field>
     </record>
 
-    <menuitem id="menu_rec_model" name="Mnto Ficha Tecnica" sequence="10"/>
-    <menuitem id="submenu_rec_model" name="opciones" parent="menu_rec_model" action="action_rec_model"/>
+    <menuitem id="menu_receta" name="Mnto Ficha Tecnica" sequence="10" groups="base.group_user"/>
+    <menuitem id="submenu_receta" name="Volver" parent="menu_receta" action="action_receta"/>
 </odoo>
 
 
-el siguiente security
-
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_rec_model_user,access_rec_model_user,model_rec_model_user,base.group_user,1,1,1,1
-access_rec_model_manager,access_rec_model_manager,model_rec_model_manager,base.group_system,1,1,1,1
-access_rec_model_user,rec.model.user,model_rec_model_user,base.group_user,1,0,0,0
-access_rec_model_manager,rec.model.manager,model_rec_model_manager,base.group_user,1,1,1,1
-
-button debe tener funcion, al ser apretado debe dirigir a una sheet nueva sin ningun campo por el momento

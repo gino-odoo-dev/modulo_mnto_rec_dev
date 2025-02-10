@@ -1,46 +1,62 @@
 <odoo>
-    <record id="view_rec_model_form" model="ir.ui.view">
-        <field name="name">rec.model.form</field>
-        <field name="model">rec.model</field>
+    <record id="view_receta_form" model="ir.ui.view">
+        <field name="name">receta.form</field>
+        <field name="model">receta</field>
         <field name="arch" type="xml">
             <form string="Mnto Ficha Tecnica">
                 <sheet>
-                    <header>
-                        <button name="next_button" string="Siguiente" type="object" class="oe_highlight"/>
-                    </header>
                     <group>
-                        <field name="name" style="width: 50%;"/>
-                        <field name="description" style="width: 50%;"/>
-                        <field name="product_id" style="width: 50%;"/>
-                        <field name="temporada_id" style="width: 25%;"/>
-                        <field name="articulo" style="width: 25%;"/>
+                        <field name="temporadas_id" style="width: 30%;"/>
+                        <field name="articulo_id" style="width: 30%;"/>
                     </group>
+                    <group>
+                        <field name="componente_id"/>
+                        <field name="descripcion_id"/>
+                        <field name="comp_manu_id"/>
+                        <field name="uni_medida_id"/>
+                        <field name="cantidad_id"/>
+                        <field name="fact_perdida_id"/>
+                        <field name="c_unitario_id"/>
+                        <field name="c_ampliado_id"/>
+                        <field name="depto_id"/>
+                        <field name="secuencia_id"/>
+                    </group>
+                    <header>
+                        <button name="next_button" string="Siguiente" type="object" class="oe_highlight" context="{'create': False}"/>
+                    </header>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <record id="view_rec_model_tree" model="ir.ui.view">
-        <field name="name">rec.model.tree</field>
-        <field name="model">rec.model</field>
+    <record id="view_receta_tree" model="ir.ui.view">
+        <field name="name">receta.tree</field>
+        <field name="model">receta</field>
         <field name="arch" type="xml">
-            <tree string="Mnto Ficha Tecnica">
-                <field name="name"/>
-                <field name="description"/>
-                <field name="product_id"/>
+            <tree string="Mnto Ficha Tecnica" editable="bottom">
+                <field name="articulo_id"/> 
                 <field name="temporada_id"/>
-                <field name="articulo"/>
+                <field name="secuencia_id"/>
+                <field name="componente_id"/>
+                <field name="descripcion_id"/>
+                <field name="comp_manu_id"/>
+                <field name="uni_medida_id"/>
+                <field name="cantidad_id"/>
+                <field name="fact_perdida_id" widget="percentage"/>
+                <field name="c_unitario_id"/>
+                <field name="c_ampliado_id" widget="monetary"/>
+                <field name="depto_id"/>
+                <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estás seguro de eliminar el registro de la ficha técnica?"/>
             </tree>
         </field>
     </record>
 
-    <record id="action_rec_model" model="ir.actions.act_window">
+    <record id="action_receta" model="ir.actions.act_window">
         <field name="name">Mnto Ficha Tecnica</field>
-        <field name="res_model">rec.model</field>
+        <field name="res_model">receta</field>
         <field name="view_mode">form,tree</field>
-        <field name="view_id" ref="view_rec_model_form"/> 
     </record>
 
-    <menuitem id="menu_rec_model" name="Mnto Ficha Tecnica" sequence="10"/>
-    <menuitem id="submenu_rec_model" name="opciones" parent="menu_rec_model" action="action_rec_model"/>
+    <menuitem id="menu_receta" name="Mnto Ficha Tecnica" sequence="10" groups="base.group_user"/>
+    <menuitem id="submenu_receta" name="Volver" parent="menu_receta" action="action_receta"/>
 </odoo>
