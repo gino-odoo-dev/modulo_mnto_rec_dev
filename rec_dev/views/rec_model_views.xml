@@ -36,7 +36,7 @@
             <tree string="Mnto Ficha Tecnica" editable="bottom">
                 <field name="articulo_id"/> 
                 <field name="temporada_id"/>
-                <field name="secuencia_id"/>
+                <field name="secuencias_id" widget="name"/>
                 <field name="componente_id"/>
                 <field name="descripcion_id"/>
                 <field name="comp_manu_id"/>

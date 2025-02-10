@@ -3,8 +3,9 @@ access_receta_user,access_receta_user,model_receta,base.group_user,1,1,1,1
 access_temporada_model_user,access_temporada_model_user,model_temporada_model,base.group_user,1,1,1,0
 access_componente_model_user,access_componente_model_user,model_componente_model,base.group_user,1,1,1,1
 access_descripcion_model_user,access_descripcion_model_user,model_descripcion_model,base.group_user,1,1,1,1
-access_secuencia_model_user,access_secuencia_model_user,model_secuencia_model,base.group_user,1,1,1,1
+access_secuencia_model_user,access_secuencia_model_user,model_secuencia_model,base.group_user,1,1,1,0
 access_unimedida_model_user,access_unimedida_model_user,model_unimedida_model,base.group_user,1,1,1,1
 access_depto_model_user,access_depto_model_user,model_depto_model,base.group_user,1,1,1,1
 access_articulo_model_user,access_articulo_model_user,model_articulo_model,base.group_user,1,1,1,0
 access_compmanu_model_user,access_compmanu_model_user,model_compmanu_model,base.group_user,1,1,1,1
+access_rec_secuencia_user,access_rec_secuencia_user,model_rec_secuencia,base.group_user,1,1,1,1
