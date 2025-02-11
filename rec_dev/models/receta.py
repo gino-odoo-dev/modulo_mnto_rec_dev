@@ -43,13 +43,17 @@ class Descripcion(models.Model):
     _name = 'descripcion.model'
     _description = 'Descripcion'
 
+class Umedida(models.Model):
+    _name = 'umedida.model'
+    _description = 'Umedida'
+
 class Descripciones(models.Model):
     _name = 'rec.secuencia'
     _description = 'Descripciones'
      
 class Unimedida(models.Model):
     _name = 'unimedida.model'
-    _description = 'Unidad de Medida'    
+    _description = 'Unidad de Medida'   
 
 class Depto(models.Model):
     _name = 'depto.model'
@@ -95,7 +99,10 @@ class Receta(models.Model):
 
     codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)
-    descripcion = fields.Text(string='Descripcion', readonly=True)
+
+    descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
+    umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True) 
+
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
     articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
@@ -142,4 +149,4 @@ class Receta(models.Model):
         if self.componente_id:
             self.descripcion = self.componente_id.descripcion
         else:
-            self.descripcion = False
+            self.descripcion = ''
