@@ -10,7 +10,7 @@
                         <field name="articulo_id" style="width: 30%;"/>
                     </group>
                     <group>
-                        <field name="componente_id"/>
+                        <field name="componente_id" on_change="1"/>
                         <field name="descripcion_id"/>
                         <field name="comp_manu_id"/>
                         <field name="uni_medida_id"/>
@@ -37,8 +37,11 @@
                 <field name="articulo_id"/> 
                 <field name="temporada_id"/>
                 <field name="secuencia_id"/>
-                <field name="componente_id"/>
+                <field name="secuencias_id"/>
+                <field name="componente_id" widget="codigo"/>
+                <field name="codigosec_id" widget="codigo" style="color: red;"/>
                 <field name="descripcion_id"/>
+                <field name="descripciones_id"/>
                 <field name="comp_manu_id"/>
                 <field name="uni_medida_id"/>
                 <field name="cantidad_id"/>

@@ -11,13 +11,24 @@ class Temporadas(models.Model):
 class Secuencia(models.Model):
     _name = 'secuencia_model'
     _description = 'Secuencia'
+    _rec_name = 'codigo'
+
+    codigo = fields.Char(string="Codigo", required=True)
 
 class Secuencias(models.Model):
     _name = 'rec.secuencia'
     _description = 'Secuencias'
     _rec_name = 'nombre'
 
+    codigo = fields.Char(string="Codigo", required=True)
     nombre = fields.Char(string="Nombre", required=True)
+
+class CodigoSec(models.Model):
+    _name = 'codigosec.model'
+    _description = 'Codigo Secuencia'
+    _rec_name = 'codigo'
+
+    codigo = fields.Char(string='CodigoSec', required=True)
 
 class Componente(models.Model):
     _name = 'componente.model'
@@ -25,13 +36,17 @@ class Componente(models.Model):
     _rec_name = 'codigo'
 
     codigo = fields.Char(string="Codigo", required=True)
-    descripcion = fields.Text(string="Descripcion")
+    descripcion = fields.Text(string="Descripcion", required=True)
     um = fields.Char(string="Unidad de Medida")
     
 class Descripcion(models.Model):
     _name = 'descripcion.model'
-    _description = 'Descripcion' 
+    _description = 'Descripcion'
 
+class Descripciones(models.Model):
+    _name = 'rec.secuencia'
+    _description = 'Descripciones'
+     
 class Unimedida(models.Model):
     _name = 'unimedida.model'
     _description = 'Unidad de Medida'    
@@ -73,10 +88,13 @@ class Receta(models.Model):
 
     temporadas_id = fields.Many2one('cl.product.temporada', string='Temporadas', readonly=False)
     temporada_id = fields.Many2one('temporada.model', string='Temporada', readonly=False)
-    componente_id = fields.Many2one('componente.model', string='Componente', readonly=True)
-    descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)
-    secuencias_id = fields.Many2one('rec.secuencia', string='Secuencias', readonly=False)
     secuencia_id = fields.Many2one('secuencia.model', string='Secuencia', readonly=False)
+    secuencias_id = fields.Many2one('rec.secuencia', string='Secuencias', readonly=False)
+    descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)    
+    descripciones_id = fields.Text(string='Descripciones', readonly=True)    
+
+    codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)
+    componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
     articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
@@ -117,4 +135,3 @@ class Receta(models.Model):
                 record.c_ampliado_id = cantidad_perdida * record.c_unitario_id
             else:
                 record.c_ampliado_id = 0
-
