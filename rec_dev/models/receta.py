@@ -15,21 +15,26 @@ class Secuencia(models.Model):
 class Secuencias(models.Model):
     _name = 'rec.secuencia'
     _description = 'Secuencias'
-    _rec_name = 'name'
+    _rec_name = 'nombre'
 
-    name = fields.Char(string="Nombre", required=True)
+    nombre = fields.Char(string="Nombre", required=True)
 
 class Componente(models.Model):
     _name = 'componente.model'
     _description = 'Componente'
+    _rec_name = 'codigo'
 
+    codigo = fields.Char(string="Codigo", required=True)
+    descripcion = fields.Text(string="Descripcion")
+    um = fields.Char(string="Unidad de Medida")
+    
 class Descripcion(models.Model):
     _name = 'descripcion.model'
-    _description = 'Descripcion'
+    _description = 'Descripcion' 
 
 class Unimedida(models.Model):
     _name = 'unimedida.model'
-    _description = 'Unidad de Medida'
+    _description = 'Unidad de Medida'    
 
 class Depto(models.Model):
     _name = 'depto.model'
@@ -38,7 +43,7 @@ class Depto(models.Model):
 class Articulo(models.Model):
     _name = 'articulo.model'
     _description = 'Articulo'
-    _rec_name = 'nombre'
+    _rec_name = 'nombre' 
 
     nombre = fields.Char(string="Nombre", required=True)
 
@@ -95,13 +100,13 @@ class Receta(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'receta',
-            'view_mode': 'tree,form',
+            'view_mode': 'tree,form',  
             'target': 'current',
             'context': {
-                'default_articulo_id': self.articulo_id.id,
-                'search_default_articulo_id': self.articulo_id.id,
+                'default_articulo_id': self.articulo_id.id, 
+                'search_default_articulo_id': self.articulo_id.id, 
             },
-            'domain': [('articulo_id', '=', self.articulo_id.id)],
+            'domain': [('articulo_id', '=', self.articulo_id.id)], 
         }
 
     @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id')
