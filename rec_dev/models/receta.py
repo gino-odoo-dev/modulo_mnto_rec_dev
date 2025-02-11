@@ -95,6 +95,7 @@ class Receta(models.Model):
 
     codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)
+    descripcion = fields.Text(string='Descripcion', readonly=True)
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
     articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
@@ -135,3 +136,10 @@ class Receta(models.Model):
                 record.c_ampliado_id = cantidad_perdida * record.c_unitario_id
             else:
                 record.c_ampliado_id = 0
+
+    @api.onchange('componente_id')
+    def _onchange_componente_id(self):
+        if self.componente_id:
+            self.descripcion = self.componente_id.descripcion
+        else:
+            self.descripcion = False
