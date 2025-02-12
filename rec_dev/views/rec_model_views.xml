@@ -9,18 +9,6 @@
                         <field name="temporadas_id" style="width: 30%;"/>
                         <field name="articulo_id" style="width: 30%;"/>
                     </group>
-                    <group>
-                        <field name="componente_id" on_change="1"/>
-                        <field name="descripcion_id"/>
-                        <field name="comp_manu_id"/>
-                        <field name="uni_medida_id"/>
-                        <field name="cantidad_id"/>
-                        <field name="fact_perdida_id"/>
-                        <field name="c_unitario_id"/>
-                        <field name="c_ampliado_id"/>
-                        <field name="depto_id"/>
-                        <field name="secuencia_id"/>
-                    </group>
                     <header>
                         <button name="next_button" string="Siguiente" type="object" class="oe_highlight" context="{'create': False}"/>
                     </header>
@@ -41,7 +29,6 @@
                 <field name="umedida" string="Umedida" readonly="1"/>
                 <field name="codigosec_id" widget="codigo"/>
                 <field name="comp_manu_id"/>
-                <field name="uni_medida_id"/>
                 <field name="cantidad_id"/>
                 <field name="fact_perdida_id" widget="percentage"/>
                 <field name="c_unitario_id"/>

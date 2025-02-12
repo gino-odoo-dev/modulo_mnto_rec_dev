@@ -95,19 +95,21 @@ class Receta(models.Model):
     secuencia_id = fields.Many2one('secuencia.model', string='Secuencia', readonly=False)
     secuencias_id = fields.Many2one('rec.secuencia', string='Secuencias', readonly=False)
     descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)    
-    descripciones_id = fields.Text(string='Descripciones', readonly=True)
     codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)
-    componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)
-    descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
-    umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True) 
+    componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)    
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
     articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
-    comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)
+    comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)   
+
+    descripciones_id = fields.Text(string='Descripciones', readonly=True)
+    descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
+    umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True)
     fact_perdida_id = fields.Float(string='Factor de Perdida (%)', readonly=False)
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)
     c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True)
+
 
     state = fields.Selection([
         ('draft', 'Borrador'),
@@ -131,7 +133,7 @@ class Receta(models.Model):
             'domain': [('articulo_id', '=', self.articulo_id.id)], 
         }
 
-    @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id')
+    @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id') 
     def calcular_costo_ampliado(self):
         for record in self:
             if record.cantidad_id and record.fact_perdida_id and record.c_unitario_id:
@@ -143,6 +145,8 @@ class Receta(models.Model):
     @api.onchange('componente_id')
     def _onchange_componente_id(self):
         if self.componente_id:
-            self.descripcion = self.componente_id.descripcion
+            self.descripcion = self.componente_id.descripcion or ''
+            self.umedida = self.componente_id.um or ''
         else:
             self.descripcion = ''
+            self.umedida = ''
