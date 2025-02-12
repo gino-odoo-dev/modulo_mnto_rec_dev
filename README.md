@@ -71,9 +71,7 @@ Modulo receta ficha tecnica.
 - Fields:
   - `name` (Char)
   - `decription` (Char)
-
-
-
+_________________________________________________
 
 ### `Vista Formulario`
 ### `receta.model`
@@ -81,8 +79,7 @@ Modulo receta ficha tecnica.
   - `temporadas_id` (Char)
   - `articulo_id` (Integer)
 
-
-
+_________________________________________________
 
 ### `Vista Lista`
 ### `receta.model`
