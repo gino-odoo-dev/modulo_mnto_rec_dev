@@ -6,32 +6,7 @@ Modulo receta ficha tecnica.
 
 ## Modelos 
 
-### `temporada.model`
-- Fields:
-  - `name` (Char)
-  - `decription` (Char)
-
-### `componente.model`
-- Fields:
-  - `name` (Char)
-  - `decription` (Char)
-
-### `descripcion.model`
-- Fields:
-  - `name` (Char)
-  - `decription` (Char)
-
-### `secuencia.model`
-- Fields:
-  - `name` (Char)
-  - `decription` (Char)
-
-### `unimedida.model`
-- Fields:
-  - `name` (Char)
-  - `decription` (Char)
-
-### `depto.model`
+### `temporadas.model`
 - Fields:
   - `name` (Char)
   - `decription` (Char)
@@ -40,18 +15,44 @@ Modulo receta ficha tecnica.
 - Fields:
   - `name` (Char)
   - `decription` (Char)
+  - `_rec_name` (nombre)
+  - `nombre` (Char)
+
+### `codigosec.model`
+- Fields:
+  - `name` (Char)
+  - `decription` (Char)
+  - `_rec_name` (codigo)
+  - `codigo` (Char)
+
+### `componente.model`
+- Fields:
+  - `name` (Char)
+  - `decription` (Char)
+  - `_rec_name` (codigo)
+  - `codigo` (Char)
+  - `descripcion` (Text)
+  - `um` (Char)
+
+### `componente.descripcion.model`
+- Fields:
+  - `descripcion` (Text)
+
+### `componente.um.model`
+- Fields:
+  - `um` (Char)
 
 ### `compmanu.model`
 - Fields:
   - `name` (Char)
   - `decription` (Char)
 
-### `factperdida.model`
+### `cantidad.model`
 - Fields:
   - `name` (Char)
   - `decription` (Char)
 
-### `cantidad.model`
+### `factperdida.model`
 - Fields:
   - `name` (Char)
   - `decription` (Char)
@@ -66,28 +67,33 @@ Modulo receta ficha tecnica.
   - `name` (Char)
   - `decription` (Char)
 
-### `temporadas.model`
+### `depto.model`
 - Fields:
   - `name` (Char)
   - `decription` (Char)
 
+
+### `Vista Formulario`
 ### `receta.model`
 - Fields:
-  - `name` (Char)
-  - `decription` (Char)
   - `temporadas_id` (Char)
-  - `temporada_id` (Char)
+  - `articulo_id` (Integer)
+
+
+### `Vista Lista`
+### `receta.model`
+- Fields:
+  - `codigosec_id` (Integer)
   - `componente_id` (Char)
-  - `decripcion_id` (Char)
-  - `secuencia_id` (Char)
-  - `uni_medida_id` (Char)
+  - `descripcion` (Text)
+  - `comp_manu` (Char)
+  - `cantidad_id` (Integer)
+  - `fact_perdida_id` (Integer)
+  - `c_unitario_id` (Float)
+  - `c_ampliado_id` (Float)
   - `depto_id` (Char)
-  - `articulo_id` (Char)
-  - `comp_manu_id` (Char)
-  - `fact_perdida_id` (Char)
-  - `cantidad` (Char)
-  - `c_unitario_id` (Char)
-  - `c_ampliado_id` (Char)
+  
   - (state)
   - `Funcion` (next_button)
   - `Funcion` (calcular_costo_ampliado)
+  - `Funcion` (_onchange_componente_id)

@@ -95,19 +95,15 @@ class Receta(models.Model):
     secuencia_id = fields.Many2one('secuencia.model', string='Secuencia', readonly=False)
     secuencias_id = fields.Many2one('rec.secuencia', string='Secuencias', readonly=False)
     descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)    
-    descripciones_id = fields.Text(string='Descripciones', readonly=True)    
-
+    descripciones_id = fields.Text(string='Descripciones', readonly=True)
     codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)
-
     descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
     umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True) 
-
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
     articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
     comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)
-
     fact_perdida_id = fields.Float(string='Factor de Perdida (%)', readonly=False)
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)

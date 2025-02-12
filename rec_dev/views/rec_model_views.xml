@@ -39,7 +39,7 @@
                 <field name="componente_id" widget="codigo"/>
                 <field name="descripcion" string="Descripcion" readonly="1"/>
                 <field name="umedida" string="Umedida" readonly="1"/>
-                <field name="codigosec_id" widget="codigo" attrs="{'style': 'color:red;'}"/>
+                <field name="codigosec_id" widget="codigo"/>
                 <field name="comp_manu_id"/>
                 <field name="uni_medida_id"/>
                 <field name="cantidad_id"/>
