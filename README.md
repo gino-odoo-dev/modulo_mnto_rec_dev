@@ -93,7 +93,11 @@ _________________________________________________
   - `c_unitario_id` (Float)
   - `c_ampliado_id` (Float)
   - `depto_id` (Char)
-  
+
+_________________________________________________
+
+### `Funciones`
+
   - (state)
   - `Funcion` (next_button)
   - `Funcion` (calcular_costo_ampliado)
