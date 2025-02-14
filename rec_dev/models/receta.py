@@ -1,4 +1,11 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
+class Codigosku(models.Model):
+    _name = 'codigosku.model'
+    _description = 'Codigosku'
+
+    codigo = fields.Char(string="Codigosku", required=True)
 
 class Temporada(models.Model):
     _name = 'temporada.model'
@@ -66,6 +73,16 @@ class Articulo(models.Model):
 
     nombre = fields.Char(string="Nombre", required=True)
 
+    @api.constrains('nombre')
+    def _check_nombre(self):
+        for record in self:
+            if not record.nombre:
+                raise ValidationError("El codigo SKU no existe.")
+            
+            if len(record.nombre) != 18:
+                raise ValidationError("El nombre debe tener exactamente 18 caracteres.")    
+
+
 class Compmanu(models.Model):
     _name = 'compmanu.model'
     _description = 'Compra o Manufacturado'
@@ -89,6 +106,7 @@ class Campliado(models.Model):
 class Receta(models.Model):
     _name = 'receta'
     _description = 'Receta'
+    _rec_name = 'nombre_receta'
 
     temporadas_id = fields.Many2one('cl.product.temporada', string='Temporadas', readonly=False)
     temporada_id = fields.Many2one('temporada.model', string='Temporada', readonly=False)
@@ -99,7 +117,7 @@ class Receta(models.Model):
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)    
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
-    articulo_id = fields.Many2one('articulo.model', string='Articulo', readonly=False)
+    articulo_id = fields.Many2one('articulo.model', string='Articulo')
     comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)   
 
     descripciones_id = fields.Text(string='Descripciones', readonly=True)
@@ -109,8 +127,25 @@ class Receta(models.Model):
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)
     c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True)
+    nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
+    
+    @api.depends('articulo_id')
+    def _compute_nombre_receta(self):
+        for record in self:
+            if record.articulo_id:
+                record.nombre_receta = f"Articulo: {record.articulo_id.nombre}"
+            else:
+                record.nombre_receta = "Articulo: Sin Nombre"
 
-
+    def name_get(self):
+        result = []
+        for record in self:
+            if self.env.context.get('form_view'):  
+                result.append((record.id, "Ficha Tecnica"))
+                nombre = record.nombre_receta if record.nombre_receta else "Articulo: Sin Nombre"
+                result.append((record.id, nombre))
+        return result
+    
     state = fields.Selection([
         ('draft', 'Borrador'),
         ('next', 'Siguiente')
@@ -137,8 +172,11 @@ class Receta(models.Model):
     def calcular_costo_ampliado(self):
         for record in self:
             if record.cantidad_id and record.fact_perdida_id and record.c_unitario_id:
-                cantidad_perdida = (record.cantidad_id * record.fact_perdida_id) / 100
-                record.c_ampliado_id = cantidad_perdida * record.c_unitario_id
+                if record.fact_perdida_id > 0:
+                    cantidad_perdida = (record.cantidad_id * record.fact_perdida_id) / 100
+                    record.c_ampliado_id = cantidad_perdida * record.c_unitario_id
+                else:
+                    record.c_ampliado_id = 0
             else:
                 record.c_ampliado_id = 0
 

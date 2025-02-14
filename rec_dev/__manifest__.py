@@ -4,13 +4,17 @@
     'summary': 'Modulo mantenimiento ficha tecnica creacion de recetas',
     'description': 'Mantenimiento Ficha Tecnica.',
     'author': 'MarcoAG',
-    'depends': ['base'],
+    'depends': ['base', 'web'],
     'data': [
         'views/rec_model_views.xml',
         'security/ir.model.access.csv',
     ],
-    'images': ['static/description/icon.png'],  
+    'assets': {
+        'web.assets_backend': [
+            'rec_dev/static/src/css/styles.css',
+            'rec_dev/static/src/js/searchbar.js',
+        ],
+    },
     'installable': True,
     'application': True,
 }
-

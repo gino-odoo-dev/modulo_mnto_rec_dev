@@ -102,3 +102,7 @@ _________________________________________________
   - `Funcion` (next_button)
   - `Funcion` (calcular_costo_ampliado)
   - `Funcion` (_onchange_componente_id)
+  - `Funcion` (_check_nombre)
+  - `Funcion` (name_get)
+
+  
