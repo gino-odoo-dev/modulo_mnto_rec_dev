@@ -9,3 +9,11 @@
 .fa {
     display: none !important;
 }
+
+.fw-bold {
+    font-size: 14px !important;
+} 
+
+.o_form_view .min-w-0 {
+    display: none !important;
+}

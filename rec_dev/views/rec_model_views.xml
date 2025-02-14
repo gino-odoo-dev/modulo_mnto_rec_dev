@@ -21,20 +21,20 @@
         <field name="name">receta.tree</field>
         <field name="model">receta</field>
         <field name="arch" type="xml">
-            <tree string="Mnto Ficha Tecnica" editable="bottom" class="custom-tree">
-                <field name="articulo_id" class="custom-field"/> 
-                <field name="temporada_id" class="custom-field"/>
-                <field name="componente_id" widget="codigo" class="custom-field"/>
-                <field name="descripcion" string="Descripcion" readonly="1" class="custom-field"/>
-                <field name="umedida" string="Umedida" readonly="1" class="custom-field"/>
-                <field name="codigosec_id" widget="codigo" class="custom-field"/>
-                <field name="comp_manu_id" class="custom-field"/>
-                <field name="cantidad_id" class="custom-field"/>
-                <field name="fact_perdida_id" widget="percentage" class="custom-field"/>
-                <field name="c_unitario_id" class="custom-field"/>
-                <field name="c_ampliado_id" widget="monetary" class="custom-field"/>
-                <field name="depto_id" class="custom-field"/>
-                <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estas seguro de eliminar el registro de la ficha tecnica?" class="custom-button"/>
+            <tree string="Mnto Ficha Tecnica" editable="bottom">
+                <field name="articulo_id"/> 
+                <field name="temporada_id"/>
+                <field name="componente_id" widget="codigo"/>
+                <field name="descripcion" string="Descripcion" readonly="1"/>
+                <field name="umedida" string="Umedida" readonly="1"/>
+                <field name="codigosec_id" widget="codigo" class="codigo-field"/>
+                <field name="comp_manu_id"/>
+                <field name="cantidad_id"/>
+                <field name="fact_perdida_id" widget="percentage"/>
+                <field name="c_unitario_id"/>
+                <field name="c_ampliado_id" widget="monetary"/>
+                <field name="depto_id"/>
+                <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estas seguro de eliminar el registro de la ficha tecnica?"/>
             </tree>
         </field>
     </record>

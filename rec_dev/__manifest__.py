@@ -12,7 +12,6 @@
     'assets': {
         'web.assets_backend': [
             'rec_dev/static/src/css/styles.css',
-            'rec_dev/static/src/js/searchbar.js',
         ],
     },
     'installable': True,
