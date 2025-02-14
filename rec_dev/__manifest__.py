@@ -12,6 +12,7 @@
     'assets': {
         'web.assets_backend': [
             'rec_dev/static/src/css/styles.css',
+            'rec_dev/static/src/js/remove_tr.js',
         ],
     },
     'installable': True,

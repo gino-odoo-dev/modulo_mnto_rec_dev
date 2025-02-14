@@ -126,7 +126,7 @@ class Receta(models.Model):
     fact_perdida_id = fields.Float(string='Factor de Perdida (%)', readonly=False)
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)
-    c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True)
+    c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True, widget="integer")
     nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
     
     @api.depends('articulo_id')
@@ -168,17 +168,18 @@ class Receta(models.Model):
             'domain': [('articulo_id', '=', self.articulo_id.id)], 
         }
 
-    @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id') 
+    @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id')
     def calcular_costo_ampliado(self):
         for record in self:
             if record.cantidad_id and record.fact_perdida_id and record.c_unitario_id:
                 if record.fact_perdida_id > 0:
                     cantidad_perdida = (record.cantidad_id * record.fact_perdida_id) / 100
-                    record.c_ampliado_id = cantidad_perdida * record.c_unitario_id
+                    record.c_ampliado_id = int(round(cantidad_perdida * record.c_unitario_id)) 
                 else:
                     record.c_ampliado_id = 0
             else:
                 record.c_ampliado_id = 0
+
 
     @api.onchange('componente_id')
     def _onchange_componente_id(self):
