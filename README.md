@@ -104,5 +104,7 @@ _________________________________________________
   - `Funcion` (_onchange_componente_id)
   - `Funcion` (_check_nombre)
   - `Funcion` (name_get)
+  - `Funcion` (_compute_nombre_receta)
 
+  
   
