@@ -22,3 +22,11 @@
 .o-mail-MessagingMenu-counter {
     display: none !important;
 }
+
+.o-mail-DiscussSystray-class {
+    display: none !important;
+}
+
+.btn.btn-outline-primary.o_form_button_create {
+    display: none !important;
+}

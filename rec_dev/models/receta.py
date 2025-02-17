@@ -1,12 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
-class Codigosku(models.Model):
-    _name = 'codigosku.model'
-    _description = 'Codigosku'
-
-    codigo = fields.Char(string="Codigosku", required=True)
-
 class Temporada(models.Model):
     _name = 'temporada.model'
     _description = 'Temporada'
@@ -53,10 +47,6 @@ class Descripcion(models.Model):
 class Umedida(models.Model):
     _name = 'umedida.model'
     _description = 'Umedida'
-
-class Descripciones(models.Model):
-    _name = 'rec.secuencia'
-    _description = 'Descripciones'
      
 class Unimedida(models.Model):
     _name = 'unimedida.model'
@@ -65,6 +55,9 @@ class Unimedida(models.Model):
 class Depto(models.Model):
     _name = 'depto.model'
     _description = 'Departamento'
+    _rec_name = 'nombre'
+
+    nombre = fields.Char(string="Nombre", required=True)
 
 class Articulo(models.Model):
     _name = 'articulo.model'
@@ -112,17 +105,15 @@ class Receta(models.Model):
     temporada_id = fields.Many2one('temporada.model', string='Temporada', readonly=False)
     secuencia_id = fields.Many2one('secuencia.model', string='Secuencia', readonly=False)
     secuencias_id = fields.Many2one('rec.secuencia', string='Secuencias', readonly=False)
-    descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)    
-    codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)
+    descripcion_id = fields.Many2one('descripcion.model', string='Descripcion', readonly=True)
+    descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
+    codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)    
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)    
     uni_medida_id = fields.Many2one('unimedida.model', string='UM', readonly=True)
-    depto_id = fields.Many2one('depto.model', string='Departamento', readonly=True)
+    umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True)
+    depto_id = fields.Many2one('depto.model', string='Departamento', readonly=False)
     articulo_id = fields.Many2one('articulo.model', string='Articulo')
     comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)   
-
-    descripciones_id = fields.Text(string='Descripciones', readonly=True)
-    descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
-    umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True)
     fact_perdida_id = fields.Float(string='Factor de Perdida (%)', readonly=False)
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)

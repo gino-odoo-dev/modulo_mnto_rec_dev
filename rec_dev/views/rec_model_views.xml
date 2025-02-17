@@ -22,19 +22,18 @@
         <field name="model">receta</field>
         <field name="arch" type="xml">
             <tree string="Mnto Ficha Tecnica" editable="bottom">
-                <field name="articulo_id"/> 
-                <field name="temporada_id"/>
+                <field name="codigosec_id" widget="codigo" class="codigo-field"/>
                 <field name="componente_id" widget="codigo"/>
                 <field name="descripcion" string="Descripcion" readonly="1"/>
-                <field name="umedida" string="Umedida" readonly="1"/>
-                <field name="codigosec_id" widget="codigo" class="codigo-field"/>
                 <field name="comp_manu_id"/>
+                <field name="umedida" string="Umedida" readonly="1"/>
                 <field name="cantidad_id"/>
                 <field name="fact_perdida_id" widget="percentage"/>
                 <field name="c_unitario_id"/>
                 <field name="c_ampliado_id" widget="monetary"/>
-                <field name="depto_id"/>
+                <field name="depto_id" widget="nombre"/>                
                 <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estas seguro de eliminar el registro de la ficha tecnica?"/>
+                <button name="next_button" string="Siguiente" type="object" class="oe_highlight" context="{'create': False}"/>
             </tree>
         </field>
     </record>
