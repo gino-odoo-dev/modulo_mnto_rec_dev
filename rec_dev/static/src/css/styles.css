@@ -12,8 +12,13 @@
 
 .fw-bold {
     font-size: 14px !important;
+    color: #111827 !important;
 } 
 
 .o_form_view .min-w-0 {
+    display: none !important;
+}
+
+.o-mail-MessagingMenu-counter {
     display: none !important;
 }
