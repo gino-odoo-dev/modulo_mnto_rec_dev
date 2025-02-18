@@ -75,7 +75,6 @@ class Articulo(models.Model):
             if len(record.nombre) != 18:
                 raise ValidationError("El nombre debe tener exactamente 18 caracteres.")    
 
-
 class Compmanu(models.Model):
     _name = 'compmanu.model'
     _description = 'Compra o Manufacturado'
@@ -120,13 +119,13 @@ class Receta(models.Model):
     c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True, widget="integer")
     nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
     
-    @api.depends('articulo_id')
+    @api.depends('articulo_id', 'temporadas_id')
     def _compute_nombre_receta(self):
         for record in self:
-            if record.articulo_id:
-                record.nombre_receta = f"Articulo: {record.articulo_id.nombre}"
-            else:
-                record.nombre_receta = "Articulo: Sin Nombre"
+            articulo_nombre = record.articulo_id.nombre if record.articulo_id else "Sin Nombre"
+            temporada_nombre = record.temporadas_id.name if record.temporadas_id else "Sin Temporada"
+            
+            record.nombre_receta = f"Articulo: {articulo_nombre} \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0 Temporada: {temporada_nombre}"
 
     def name_get(self):
         result = []
@@ -170,7 +169,6 @@ class Receta(models.Model):
                     record.c_ampliado_id = 0
             else:
                 record.c_ampliado_id = 0
-
 
     @api.onchange('componente_id')
     def _onchange_componente_id(self):

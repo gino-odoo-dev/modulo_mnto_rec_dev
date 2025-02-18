@@ -13,6 +13,7 @@
 .fw-bold {
     font-size: 14px !important;
     color: #111827 !important;
+    font-weight: normal !important;
 } 
 
 .o_form_view .min-w-0 {
@@ -28,5 +29,9 @@
 }
 
 .btn.btn-outline-primary.o_form_button_create {
+    display: none !important;
+}
+
+.o_cp_pager {
     display: none !important;
 }

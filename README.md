@@ -1,4 +1,4 @@
-# Mantenimiento Receta Module
+# Modulo Mantenimiento ficha Tecnica.
 
 ## Alcance del modulo
 
