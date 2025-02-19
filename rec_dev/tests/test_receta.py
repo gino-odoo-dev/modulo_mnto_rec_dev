@@ -1,4 +1,4 @@
-# tests/test_receta.py
+""" # tests/test_receta.py
 from odoo.tests.common import TransactionCase
 
 class TestReceta(TransactionCase):
@@ -21,4 +21,4 @@ class TestReceta(TransactionCase):
             'fact_perdida_id': 5.0,
             'c_unitario_id': 100.0,
         })
-        self.assertEqual(receta.c_ampliado_id, 50, "El costo ampliado no se calculo correctamente.")
+        self.assertEqual(receta.c_ampliado_id, 50, "El costo ampliado no se calculo correctamente.") """

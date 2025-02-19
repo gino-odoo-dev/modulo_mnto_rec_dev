@@ -2,10 +2,24 @@ rec_dev/
 ├── __init__.py
 ├── __manifest__.py
 │
-├── models/
-│   ├── __init__.py
-│   └── rec_model.py
-│
+└── models/
+    ├── __init__.py
+    └── receta.py
+    └── articulo.py
+    └── campliado.py
+    └── cantidad.py
+    └── codigosec.py
+    └── compmanu.py
+    └── componente.py
+    └── cunitario.py
+    └── depto.py
+    └── descripcion.py
+    └── secuencia.py
+    └── secuencias.py
+    └── temporada.py
+    └── temporadas.py
+    └── umedida.py
+    └── unimedida.py
 ├── views/
 │   └── rec_model_views.xml
 │
@@ -20,69 +34,31 @@ rec_dev/
         └── css/
             └── styles.css
 
+modelo init 
 
-modelo 
+from . import temporada
+from . import temporadas
+from . import secuencia
+from . import secuencias
+from . import codigosec
+from . import componente
+from . import descripcion
+from . import umedida
+from . import unimedida
+from . import depto
+from . import articulo
+from . import compmanu
+from . import factperdida
+from . import cantidad
+from . import cunitario
+from . import campliado
+from . import receta
 
-from odoo import models, fields, api
+
+modelo articulo 
+
+from odoo import models, fields
 from odoo.exceptions import ValidationError
-
-class Temporada(models.Model):
-    _name = 'temporada.model'
-    _description = 'Temporada'
-
-class Temporadas(models.Model):
-    _name = 'cl.product.temporada'
-    _description = 'Temporadas'
-
-class Secuencia(models.Model):
-    _name = 'secuencia_model'
-    _description = 'Secuencia'
-    _rec_name = 'codigo'
-
-    codigo = fields.Char(string="Codigo", required=True)
-
-class Secuencias(models.Model):
-    _name = 'rec.secuencia'
-    _description = 'Secuencias'
-    _rec_name = 'nombre'
-
-    codigo = fields.Char(string="Codigo", required=True)
-    nombre = fields.Char(string="Nombre", required=True)
-
-class CodigoSec(models.Model):
-    _name = 'codigosec.model'
-    _description = 'Codigo Secuencia'
-    _rec_name = 'codigo'
-
-    codigo = fields.Char(string='CodigoSec', required=True)
-
-class Componente(models.Model):
-    _name = 'componente.model'
-    _description = 'Componente'
-    _rec_name = 'codigo'
-
-    codigo = fields.Char(string="Codigo", required=True)
-    descripcion = fields.Text(string="Descripcion", required=True)
-    um = fields.Char(string="Unidad de Medida")
-    
-class Descripcion(models.Model):
-    _name = 'descripcion.model'
-    _description = 'Descripcion'
-
-class Umedida(models.Model):
-    _name = 'umedida.model'
-    _description = 'Umedida'
-     
-class Unimedida(models.Model):
-    _name = 'unimedida.model'
-    _description = 'Unidad de Medida'   
-
-class Depto(models.Model):
-    _name = 'depto.model'
-    _description = 'Departamento'
-    _rec_name = 'nombre'
-
-    nombre = fields.Char(string="Nombre", required=True)
 
 class Articulo(models.Model):
     _name = 'articulo.model'
@@ -98,28 +74,156 @@ class Articulo(models.Model):
                 raise ValidationError("El codigo SKU no existe.")
             
             if len(record.nombre) != 18:
-                raise ValidationError("El nombre debe tener exactamente 18 caracteres.")    
+                raise ValidationError("El nombre debe tener exactamente 18 caracteres.") 
 
+modelo campliado
+
+from odoo import models 
+
+class Campliado(models.Model):
+    _name = 'campliado.model'
+    _description = 'Costo Ampliado'
+
+
+modelo codigosec
+
+from odoo import models, fields
+
+class CodigoSec(models.Model):
+    _name = 'codigosec.model'
+    _description = 'Codigo Secuencia'
+    _rec_name = 'codigo'
+
+    codigo = fields.Char(string='CodigoSec', required=True)
+
+
+modelo compmanu
+
+from odoo import models
 
 class Compmanu(models.Model):
     _name = 'compmanu.model'
     _description = 'Compra o Manufacturado'
 
-class Factperdida(models.Model):
-    _name = 'factperdida.model'
-    _description = 'Factor de Perdida'
 
-class Cantidad(models.Model):
-    _name = 'cantidad.model'
-    _description = 'Cantidad'
+modelo componente
+
+from odoo import models, fields 
+
+class Componente(models.Model):
+    _name = 'componente.model'
+    _description = 'Componente'
+    _rec_name = 'codigo'
+
+    codigo = fields.Char(string="Codigo", required=True)
+    descripcion = fields.Text(string="Descripcion", required=True)
+    um = fields.Char(string="Unidad de Medida")
+
+
+modelo cunitario
+
+from odoo import models
 
 class Cunitario(models.Model):
     _name = 'cunitario.model'
     _description = 'Costo Unitario'
 
-class Campliado(models.Model):
-    _name = 'campliado.model'
-    _description = 'Costo Ampliado'
+
+modelo depto
+
+from odoo import models, fields
+
+class Depto(models.Model):
+    _name = 'depto.model'
+    _description = 'Departamento'
+    _rec_name = 'nombre'
+
+    nombre = fields.Char(string="Nombre", required=True)
+
+
+modelo descripcion
+
+from odoo import models 
+
+class Descripcion(models.Model):
+    _name = 'descripcion.model'
+    _description = 'Descripcion'
+
+
+modelo factperdida
+
+from odoo import models
+
+class Factperdida(models.Model):
+    _name = 'factperdida.model'
+    _description = 'Factor de Perdida'
+
+
+modelo secuencia
+
+from odoo import models, fields
+
+class Secuencia(models.Model):
+    _name = 'secuencia_model'
+    _description = 'Secuencia'
+    _rec_name = 'codigo'
+
+    codigo = fields.Char(string="Codigo", required=True)
+
+
+modelo secuncias
+
+from odoo import models, fields  
+
+class Secuencias(models.Model):
+    _name = 'rec.secuencia'
+    _description = 'Secuencias'
+    _rec_name = 'nombre'
+
+    codigo = fields.Char(string="Codigo", required=True)
+    nombre = fields.Char(string="Nombre", required=True)
+
+
+modelo temporada
+
+from odoo import models
+
+class Temporada(models.Model):
+    _name = 'temporada.model'
+    _description = 'Temporada'
+
+
+modelo temporadas
+
+from odoo import models
+
+class Temporadas(models.Model):
+    _name = 'cl.product.temporada'
+    _description = 'Temporadas'
+
+
+modelo umedida
+
+from odoo import models
+
+class Umedida(models.Model):
+    _name = 'umedida.model'
+    _description = 'Umedida'
+
+
+modelo unimedida
+
+from odoo import models 
+
+class Unimedida(models.Model):
+    _name = 'unimedida.model'
+    _description = 'Unidad de Medida'   
+
+
+modelo receta 
+
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class Receta(models.Model):
     _name = 'receta'
@@ -145,13 +249,13 @@ class Receta(models.Model):
     c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True, widget="integer")
     nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
     
-    @api.depends('articulo_id')
+    @api.depends('articulo_id', 'temporadas_id')
     def _compute_nombre_receta(self):
         for record in self:
-            if record.articulo_id:
-                record.nombre_receta = f"Articulo: {record.articulo_id.nombre}"
-            else:
-                record.nombre_receta = "Articulo: Sin Nombre"
+            articulo_nombre = record.articulo_id.nombre if record.articulo_id else "Sin Nombre"
+            temporada_nombre = record.temporadas_id.name if record.temporadas_id else "Sin Temporada"
+            
+            record.nombre_receta = f"Articulo: {articulo_nombre} \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0 Temporada: {temporada_nombre}"
 
     def name_get(self):
         result = []
@@ -196,7 +300,6 @@ class Receta(models.Model):
             else:
                 record.c_ampliado_id = 0
 
-
     @api.onchange('componente_id')
     def _onchange_componente_id(self):
         if self.componente_id:
@@ -206,11 +309,10 @@ class Receta(models.Model):
             self.descripcion = ''
             self.umedida = ''
 
+    
+    vista 
 
-vista
-
-
-<odoo>
+    <odoo>
     <record id="view_receta_form" model="ir.ui.view">
         <field name="name">receta.form</field>
         <field name="model">receta</field>
@@ -259,3 +361,47 @@ vista
     <menuitem id="menu_receta" name="Mnto Ficha Tecnica" sequence="10" groups="base.group_user"/>
     <menuitem id="submenu_receta" name="Volver" parent="menu_receta" action="action_receta"/>
 </odoo>
+
+security
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_receta_user,access_receta_user,model_receta,base.group_user,1,1,1,1
+access_temporada_model_user,access_temporada_model_user,model_temporada_model,base.group_user,1,1,1,0
+access_temporadas_model_user,access_temporadas_model_user,model_cl_product_temporada,base.group_user,1,1,1,0
+access_secuencia_model_user,access_secuencia_model_user,model_secuencia_model,base.group_user,1,1,1,0
+access_secuencias_model_user,access_secuencias_model_user,model_rec_secuencia,base.group_user,1,1,1,1
+access_codigosec_model_user,access_codigosec_model_user,model_codigosec_model,base.group_user,1,1,1,1
+access_componente_model_user,access_componente_model_user,model_componente_model,base.group_user,1,1,1,1
+access_descripcion_model_user,access_descripcion_model_user,model_descripcion_model,base.group_user,1,1,1,1
+access_unimedida_model_user,access_unimedida_model_user,model_unimedida_model,base.group_user,1,1,1,1
+access_depto_model_user,access_depto_model_user,model_depto_model,base.group_user,1,1,1,1
+access_articulo_model_user,access_articulo_model_user,model_articulo_model,base.group_user,1,1,1,0
+access_compmanu_model_user,access_compmanu_model_user,model_compmanu_model,base.group_user,1,1,1,1
+access_factperdida_model_user,access_factperdida_model_user,model_factperdida_model,base.group_user,1,1,1,1
+access_cantidad_model_user,access_cantidad_model_user,model_cantidad_model,base.group_user,1,1,1,1
+access_cunitario_model_user,access_cunitario_model_user,model_cunitario_model,base.group_user,1,1,1,1
+access_campliado_model_user,access_campliado_model_user,model_campliado_model,base.group_user,1,1,1,1
+
+
+manifest 
+
+{
+    'name': 'Ficha Tecnica',
+    'version': '1.0',
+    'summary': 'Modulo mantenimiento ficha tecnica creacion de recetas',
+    'description': 'Mantenimiento Ficha Tecnica.',
+    'author': 'MarcoAG',
+    'depends': ['base', 'web'],
+    'data': [
+        'views/rec_model_views.xml',
+        'security/ir.model.access.csv',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'rec_dev/static/src/css/styles.css',
+            'rec_dev/static/src/js/remove_tr.js',
+        ],
+    },
+    'installable': True,
+    'application': True,
+}

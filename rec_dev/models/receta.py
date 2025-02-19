@@ -1,100 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
-class Temporada(models.Model):
-    _name = 'temporada.model'
-    _description = 'Temporada'
-
-class Temporadas(models.Model):
-    _name = 'cl.product.temporada'
-    _description = 'Temporadas'
-
-class Secuencia(models.Model):
-    _name = 'secuencia_model'
-    _description = 'Secuencia'
-    _rec_name = 'codigo'
-
-    codigo = fields.Char(string="Codigo", required=True)
-
-class Secuencias(models.Model):
-    _name = 'rec.secuencia'
-    _description = 'Secuencias'
-    _rec_name = 'nombre'
-
-    codigo = fields.Char(string="Codigo", required=True)
-    nombre = fields.Char(string="Nombre", required=True)
-
-class CodigoSec(models.Model):
-    _name = 'codigosec.model'
-    _description = 'Codigo Secuencia'
-    _rec_name = 'codigo'
-
-    codigo = fields.Char(string='CodigoSec', required=True)
-
-class Componente(models.Model):
-    _name = 'componente.model'
-    _description = 'Componente'
-    _rec_name = 'codigo'
-
-    codigo = fields.Char(string="Codigo", required=True)
-    descripcion = fields.Text(string="Descripcion", required=True)
-    um = fields.Char(string="Unidad de Medida")
-    
-class Descripcion(models.Model):
-    _name = 'descripcion.model'
-    _description = 'Descripcion'
-
-class Umedida(models.Model):
-    _name = 'umedida.model'
-    _description = 'Umedida'
-     
-class Unimedida(models.Model):
-    _name = 'unimedida.model'
-    _description = 'Unidad de Medida'   
-
-class Depto(models.Model):
-    _name = 'depto.model'
-    _description = 'Departamento'
-    _rec_name = 'nombre'
-
-    nombre = fields.Char(string="Nombre", required=True)
-
-class Articulo(models.Model):
-    _name = 'articulo.model'
-    _description = 'Articulo'
-    _rec_name = 'nombre' 
-
-    nombre = fields.Char(string="Nombre", required=True)
-
-    @api.constrains('nombre')
-    def _check_nombre(self):
-        for record in self:
-            if not record.nombre:
-                raise ValidationError("El codigo SKU no existe.")
-            
-            if len(record.nombre) != 18:
-                raise ValidationError("El nombre debe tener exactamente 18 caracteres.")    
-
-class Compmanu(models.Model):
-    _name = 'compmanu.model'
-    _description = 'Compra o Manufacturado'
-
-class Factperdida(models.Model):
-    _name = 'factperdida.model'
-    _description = 'Factor de Perdida'
-
-class Cantidad(models.Model):
-    _name = 'cantidad.model'
-    _description = 'Cantidad'
-
-class Cunitario(models.Model):
-    _name = 'cunitario.model'
-    _description = 'Costo Unitario'
-
-class Campliado(models.Model):
-    _name = 'campliado.model'
-    _description = 'Costo Ampliado'
-
 class Receta(models.Model):
     _name = 'receta'
     _description = 'Receta'
@@ -144,7 +50,6 @@ class Receta(models.Model):
     def next_button(self):
         self.ensure_one()
         self.state = 'next'
-        self._cr.commit()
 
         return {
             'type': 'ir.actions.act_window',
