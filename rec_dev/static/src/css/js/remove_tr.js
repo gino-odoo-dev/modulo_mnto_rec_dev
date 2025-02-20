@@ -7,8 +7,10 @@ odoo.define('rec_dev.remove_last_tr', function (require) {
         _renderView: function () {
             var self = this;
             return this._super.apply(this, arguments).then(function () {
+                console.log('renderizando...');
                 var rows = self.$('tbody tr');
                 if (rows.length > 0) {
+                    console.log('eliminando...');
                     rows.last().remove(); 
                 }
             });
