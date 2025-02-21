@@ -35,7 +35,9 @@ rec_dev/
             └── styles.css
 
 
-model
+modulo madre rec_dev 
+
+model (modulo madre)
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
@@ -125,7 +127,7 @@ class Receta(models.Model):
             self.umedida = ''
 
 
-views
+views (modulo madre)
 
 <odoo>
     <record id="view_receta_form" model="ir.ui.view">
@@ -170,10 +172,25 @@ views
         <field name="name">Mnto Ficha Tecnica</field>
         <field name="res_model">receta</field>
         <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_receta_form"/>
     </record>
 
     <menuitem id="menu_receta" name="Mnto Ficha Tecnica" sequence="10" groups="base.group_user"/>
     <menuitem id="submenu_receta" name="Volver" parent="menu_receta" action="action_receta"/>
+
+    <record id="view_copia_ficha_form" model="ir.ui.view">
+        <field name="name">copia.ficha.form</field>
+        <field name="model">receta</field>
+        <field name="arch" type="xml">
+            <form string="Copia Ficha Tecnica">
+                <sheet>
+                    <group>
+                        <field name="copiaficha" style="width: 30%;"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
     <record id="action_copia_ficha" model="ir.actions.act_window">
         <field name="name">Copia Ficha Tecnica</field>
@@ -186,7 +203,8 @@ views
     <menuitem id="submenu_copia_ficha" name="Copia Ficha Tecnica" parent="menu_receta" action="action_copia_ficha"/>
 </odoo>
 
-manifest 
+
+manifest (modulo madre)
 
 {
     'name': 'Ficha Tecnica',
@@ -208,4 +226,130 @@ manifest
     'installable': True,
     'application': True,
 }
+
+security (modulo madre)
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_receta_user,access_receta_user,model_receta,base.group_user,1,1,1,1
+access_temporada_model_user,access_temporada_model_user,model_temporada_model,base.group_user,1,1,1,0
+access_temporadas_model_user,access_temporadas_model_user,model_cl_product_temporada,base.group_user,1,1,1,1
+access_secuencia_model_user,access_secuencia_model_user,model_secuencia_model,base.group_user,1,1,1,0
+access_secuencias_model_user,access_secuencias_model_user,model_rec_secuencia,base.group_user,1,1,1,1
+access_codigosec_model_user,access_codigosec_model_user,model_codigosec_model,base.group_user,1,1,1,1
+access_componente_model_user,access_componente_model_user,model_componente_model,base.group_user,1,1,1,1
+access_descripcion_model_user,access_descripcion_model_user,model_descripcion_model,base.group_user,1,1,1,1
+access_unimedida_model_user,access_unimedida_model_user,model_unimedida_model,base.group_user,1,1,1,1
+access_depto_model_user,access_depto_model_user,model_depto_model,base.group_user,1,1,1,1
+access_articulo_model_user,access_articulo_model_user,model_articulo_model,base.group_user,1,1,1,1
+access_compmanu_model_user,access_compmanu_model_user,model_compmanu_model,base.group_user,1,1,1,1
+access_factperdida_model_user,access_factperdida_model_user,model_factperdida_model,base.group_user,1,1,1,1
+access_cantidad_model_user,access_cantidad_model_user,model_cantidad_model,base.group_user,1,1,1,1
+access_cunitario_model_user,access_cunitario_model_user,model_cunitario_model,base.group_user,1,1,1,1
+access_campliado_model_user,access_campliado_model_user,model_campliado_model,base.group_user,1,1,1,1
+access_copiaficha_model_user,access_copiaficha_model_user,model_copiaficha_model,base.group_user,1,1,1,1
+
+
+
+----------------------------------------------------------
+
+
+modulo hijo copia_rec_dev que se extiende de rec_dev
+
+model (modulo hijo)
+
+from odoo import models, fields
+
+class CopiaReceta(models.Model):
+    _name = 'copia.receta' 
+    _inherit = 'receta'  
+    _description = 'Copia de Receta' 
+
+    copia_nombre = fields.Char(string='Nombre de la copia', required=True)
+
+    def copiar_receta(self):
+        for record in self:
+            nueva_receta = record-copy(default={'nombre_receta': f"Copia de {record.nombre_receta}"}) 
+
+
+views (modulo hijo)
+
+<odoo>
+    <record id="view_copia_receta_form" model="ir.ui.view">
+        <field name="name">copia.receta.form</field>
+        <field name="model">copia.receta</field>
+        <field name="arch" type="xml">
+            <form string="Copia de Ficha Tecnica">
+                <sheet>
+                    <group>
+                        <field name="temporadas_id" style="width: 30%;"/>
+                        <field name="articulo_id" style="width: 30%;"/>
+                        <field name="copia_nombre" style="width: 30%;"/>
+                    </group>
+                    <header>
+                        <button name="copiar_receta" string="Copiar Receta" type="object" class="oe_highlight"/>
+                    </header>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_copia_receta_tree" model="ir.ui.view">
+        <field name="name">copia.receta.tree</field>
+        <field name="model">copia.receta</field>
+        <field name="arch" type="xml">
+            <tree string="Copias de Ficha Tecnica" editable="bottom">
+                <field name="codigosec_id" widget="codigo" class="codigo-field"/>
+                <field name="componente_id" widget="codigo"/>
+                <field name="descripcion" string="Descripcion" readonly="1"/>
+                <field name="comp_manu_id"/>
+                <field name="umedida" string="Umedida" readonly="1"/>
+                <field name="cantidad_id"/>
+                <field name="fact_perdida_id" widget="percentage"/>
+                <field name="c_unitario_id"/>
+                <field name="c_ampliado_id" widget="monetary"/>
+                <field name="depto_id" widget="nombre"/>
+                <field name="copia_nombre"/>
+                <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estas seguro de eliminar la copia de la ficha tecnica?"/>
+                <button name="copiar_receta" string="Copiar Receta" type="object" class="oe_highlight"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_copia_receta" model="ir.actions.act_window">
+        <field name="name">Copia de Ficha Tecnica</field>
+        <field name="res_model">copia.receta</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="menu_copia_receta" name="Copia de Ficha Tecnica" sequence="20" parent="rec_dev.menu_receta" action="action_copia_receta"/>
+</odoo>
+
+
+manifest  (modulo hijo)
+
+{
+    'name': 'Copia Ficha Tecnica',
+    'version': '1.0',
+    'summary': 'extension del modulo mantenimiento Copia ficha tecnica.',
+    'description': 'Este modulo se extiende del modulo ficha tecnica para permitir la copia de recetas,',
+    'author': 'MarcoAG',
+    'depends': ['rec_dev'],
+    'data': [
+        'views/copia_rec_model_views.xml',
+        'security/ir.model.access.csv',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'rec_dev/static/src/css/styles.css',
+        ],
+    },
+    'installable': True,
+    'application': True
+}
+
+
+security (modulo hijo)
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_copia_receta_user,access_copia_receta_user,model_copia_receta,base.group_user,1,1,1,1
 

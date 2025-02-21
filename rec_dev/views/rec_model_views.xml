@@ -54,7 +54,7 @@
             <form string="Copia Ficha Tecnica">
                 <sheet>
                     <group>
-                        <field name="copiaficha"/>
+                        <field name="copiaficha" style="width: 30%;"/>
                     </group>
                 </sheet>
             </form>
