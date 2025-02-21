@@ -24,7 +24,7 @@ class Receta(models.Model):
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)
     c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True, widget="integer")
     nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
-    nombre = fields.Many2one('copiaficha.model', string='Copia Ficha', readonly=False)
+    copiaficha = fields.Many2one('copiaficha.model', string='Copia Ficha', readonly=False)
     
     @api.depends('articulo_id', 'temporadas_id')
     def _compute_nombre_receta(self):
