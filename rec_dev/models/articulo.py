@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 class Articulo(models.Model):
     _name = 'articulo.model'
     _description = 'Articulo'
-    _rec_name = 'nombre' 
+    _rec_name = 'nombre'
 
     nombre = fields.Char(string="Nombre", required=True)
 
@@ -16,4 +16,3 @@ class Articulo(models.Model):
 
             if len(record.nombre) != 18:
                 raise ValidationError("El nombre debe tener exactamente 18 caracteres.")
-            

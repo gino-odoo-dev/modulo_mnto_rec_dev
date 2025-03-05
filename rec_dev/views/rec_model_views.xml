@@ -7,7 +7,7 @@
                 <sheet>
                     <group>
                         <field name="temporadas_id" style="width: 30%;"/>
-                        <field name="articulo_id" style="width: 30%;"/>
+                        <field name="articulos_id" style="width: 30%;"/>
                     </group>
                     <header>
                         <button name="next_button" string="Siguiente" type="object" class="oe_highlight" context="{'create': False}"/>

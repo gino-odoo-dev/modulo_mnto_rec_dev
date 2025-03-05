@@ -7,14 +7,16 @@ class Receta(models.Model):
     _rec_name = 'nombre_receta'
     _order = 'sequence asc, id asc'
 
+    articulos_id = fields.Many2one('cl.product.articulo', string='Articulo', readonly=False)
+    temporadas_id = fields.Many2one('cl.product.temporada', string='Temporada', readonly=False)
+    articulo_id = fields.Many2one('articulo.model', string='Articulo:')
+    temporada_id = fields.Many2one('temporada.model', string='Temporada:')
     sequence = fields.Integer(string="Secuencia", default=10)
-    temporadas_id = fields.Many2one('cl.product.temporada', string='Temporada:', readonly=False)
     descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
     codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)    
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)    
     umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=False)
-    articulo_id = fields.Many2one('articulo.model', string='Articulo:')
     comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)   
     fact_perdida_id = fields.Float(string='Factor de Perdida (%)', readonly=False)
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
@@ -23,10 +25,10 @@ class Receta(models.Model):
     nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
     copiaficha = fields.Many2one('copiaficha.model', string='Copia Ficha', readonly=False)
     
-    @api.depends('articulo_id', 'temporadas_id')
+    @api.depends('articulos_id', 'temporadas_id')
     def _compute_nombre_receta(self):
         for record in self:
-            articulo_nombre = record.articulo_id.nombre if record.articulo_id else "Sin Nombre"
+            articulo_nombre = record.articulos_id.name if record.articulos_id else "Sin Nombre"
             temporada_nombre = record.temporadas_id.name if record.temporadas_id else "Sin Temporada"
             
             record.nombre_receta = f"Articulo: {articulo_nombre} \u00A0\u00A0\u00A0\u00A0\u00A0 Temporada: {temporada_nombre}"
@@ -55,10 +57,10 @@ class Receta(models.Model):
             'view_mode': 'tree,form',  
             'target': 'current',
             'context': {
-                'default_articulo_id': self.articulo_id.id, 
-                'search_default_articulo_id': self.articulo_id.id, 
+                'default_articulos_id': self.articulos_id.id, 
+                'search_default_articulos_id': self.articulos_id.id, 
             },
-            'domain': [('articulo_id', '=', self.articulo_id.id)], 
+            'domain': [('articulos_id', '=', self.articulos_id.id)], 
         }
 
     @api.depends('cantidad_id', 'fact_perdida_id', 'c_unitario_id')
