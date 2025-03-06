@@ -1,6 +1,4 @@
-from . import temporada
 from . import temporadas
-from . import articulo
 from . import articulos
 from . import codigosec
 from . import componente

@@ -8,10 +8,10 @@ class Receta(models.Model):
     _order = 'sequence asc, id asc'
 
     articulos_id = fields.Many2one('cl.product.articulo', string='Articulo', readonly=False)
+    articulo_name = fields.Char(string='Nombre de Articulo', compute='_compute_articulo_name', store=True)
     temporadas_id = fields.Many2one('cl.product.temporada', string='Temporada', readonly=False)
-    articulo_id = fields.Many2one('articulo.model', string='Articulo:')
-    temporada_id = fields.Many2one('temporada.model', string='Temporada:')
-    sequence = fields.Integer(string="Secuencia", default=10)
+    temporada_name = fields.Char(string='Nombre de Temporada', compute='_compute_temporada_name', store=True)
+    
     descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
     codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)    
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)    
@@ -24,7 +24,8 @@ class Receta(models.Model):
     c_ampliado_id = fields.Float(string='Costo Ampliado', compute='calcular_costo_ampliado', store=True, readonly=True, widget="integer")
     nombre_receta = fields.Char(string='Nombre de la receta', compute='_compute_nombre_receta', store=True)
     copiaficha = fields.Many2one('copiaficha.model', string='Copia Ficha', readonly=False)
-    
+    sequence = fields.Integer(string="Secuencia", default=10)
+
     @api.depends('articulos_id', 'temporadas_id')
     def _compute_nombre_receta(self):
         for record in self:
@@ -32,6 +33,16 @@ class Receta(models.Model):
             temporada_nombre = record.temporadas_id.name if record.temporadas_id else "Sin Temporada"
             
             record.nombre_receta = f"Articulo: {articulo_nombre} \u00A0\u00A0\u00A0\u00A0\u00A0 Temporada: {temporada_nombre}"
+
+    @api.depends('temporadas_id')
+    def _compute_temporada_name(self):
+        for record in self:
+            record.temporada_name = getattr(record.temporadas_id, 'name', "Sin Temporada")
+
+    @api.depends('articulos_id')
+    def _compute_articulo_name(self):
+        for record in self:
+            record.articulo_name = getattr(record.articulos_id, 'name', "Sin Nombre")
 
     def name_get(self):
         result = []
