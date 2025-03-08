@@ -13,11 +13,11 @@ class Receta(models.Model):
     temporada_name = fields.Char(string='Nombre de Temporada', compute='_compute_temporada_name', store=True)
     
     descripcion = fields.Text(string='Descripcion', related='componente_id.descripcion', store=False, readonly=True) 
-    codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)    
+    codigosec_id = fields.Many2one('codigosec.model', string='CodigoSec', readonly=False)     
     componente_id = fields.Many2one('componente.model', string='Componente', readonly=False)    
     umedida = fields.Char(string='Umedida', related='componente_id.um', store=False, readonly=True)
     depto_id = fields.Many2one('depto.model', string='Departamento', readonly=False)
-    comp_manu_id = fields.Many2one('compmanu.model', string='C/M', readonly=True)   
+    comp_manu_id = fields.Many2one('compmanu.model', string='CM', readonly=False)   
     fact_perdida_id = fields.Float(string='Factor de Perdida (%)', readonly=False)
     cantidad_id = fields.Integer(string='Cantidad', readonly=False)
     c_unitario_id = fields.Float(string='Costo Unitario', readonly=False)
@@ -43,6 +43,11 @@ class Receta(models.Model):
     def _compute_articulo_name(self):
         for record in self:
             record.articulo_name = getattr(record.articulos_id, 'name', "Sin Nombre")
+
+    @api.depends('comp_manu_id')
+    def _compute_compmanu_name(self):
+        for record in self:
+            record.compmanu_name = getattr(record.comp_manu_id, 'tipo', "Sin Nombre")
 
     def name_get(self):
         result = []

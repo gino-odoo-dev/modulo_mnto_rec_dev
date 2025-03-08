@@ -25,8 +25,8 @@
                 <field name="codigosec_id" widget="codigo" class="codigo-field"/>
                 <field name="componente_id" widget="codigo"/>
                 <field name="descripcion" string="Descripcion" readonly="1"/>
-                <field name="comp_manu_id"/>
                 <field name="umedida" string="Umedida" readonly="1"/>
+                <field name="comp_manu_id" widget="tipo"/>
                 <field name="cantidad_id"/>
                 <field name="fact_perdida_id" widget="percentage"/>
                 <field name="c_unitario_id"/>
