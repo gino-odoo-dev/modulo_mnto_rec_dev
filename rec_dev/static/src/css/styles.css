@@ -45,4 +45,10 @@ body {
     display: none !important;
 }
 
+.o_menu_brand {
+    font-size: 0.85rem !important;
+}
 
+.o_menu_sections {
+    font-size: 0.85rem !important;
+}
