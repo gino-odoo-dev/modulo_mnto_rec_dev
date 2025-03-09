@@ -31,7 +31,7 @@
                 <field name="fact_perdida_id" widget="percentage"/>
                 <field name="c_unitario_id"/>
                 <field name="c_ampliado_id" widget="monetary"/>
-                <field name="depto_id" widget="nombre"/>                
+                <field name="depto_id" widget="descripcion"/> 
                 <button name="unlink" string="Eliminar" type="object" icon="fa-trash" confirm="¿Estas seguro de eliminar el registro de la ficha tecnica?"/>
             </tree>
         </field>

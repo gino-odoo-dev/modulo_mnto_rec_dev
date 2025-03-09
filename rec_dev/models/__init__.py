@@ -12,4 +12,3 @@ from . import cunitario
 from . import campliado
 from . import receta
 from . import copiaficha
-

@@ -11,7 +11,9 @@ odoo.define('rec_dev.remove_last_tr', function (require) {
                 var rows = self.$('tbody tr');
                 if (rows.length > 0) {
                     console.log('eliminando...');
-                    rows.last().remove(); 
+                    rows.slice(-4).each(function() {
+                        $(this).remove();
+                    });
                 }
             });
         },
