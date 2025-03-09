@@ -44,6 +44,13 @@ class Receta(models.Model):
         for record in self:
             record.articulo_name = getattr(record.articulos_id, 'name', "Sin Nombre")
 
+
+    @api.depends('componente_id')
+    def _compute_componente_name(self):
+        for record in self:
+            record.componente_name = getattr(record.componentes_id, 'codigo', "Sin Nombre")
+
+
     def name_get(self):
         result = []
         for record in self:
