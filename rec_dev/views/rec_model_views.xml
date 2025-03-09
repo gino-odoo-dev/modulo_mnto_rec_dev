@@ -45,6 +45,6 @@
     </record>
 
     <menuitem id="menu_receta" name="Mnto Ficha Tecnica" sequence="10" groups="base.group_user"/>
-    <menuitem id="submenu_receta" name="Volver" parent="menu_receta" action="action_receta" context="{'default_view_mode': 'tree'}"/>
+    <menuitem id="submenu_receta" name="Volver" parent="menu_receta" action="action_receta"/>
     <menuitem id="menu_submoduloficha_root" name="Submodulo Ficha" parent="rec_dev.menu_receta"/>
 </odoo>
